@@ -13,6 +13,21 @@
 sensor:
 ####################################################
 #                                                  #
+#                 Sensor - AirVisual               #
+#                                                  #
+####################################################
+
+  - platform: airvisual
+    api_key: !secret airviskey
+    monitored_conditions:
+      - us
+    show_on_map: true
+    city: "Vinh Yen"
+    state: "Tinh Vinh Phuc"
+    country: "Vietnam"
+
+####################################################
+#                                                  #
 #                  Sensor - Darksky                #
 #                                                  #
 ####################################################

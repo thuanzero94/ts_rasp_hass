@@ -9,6 +9,8 @@ resources:
     type: js
   - url: /local/custom_ui/dark-sky-weather-card.js?
     type: module
+  - url: /local/custom_ui/air-visual-card.js
+    type: js
 
 background: center / cover no-repeat url("/local/lovelace/background_19.png") fixed
 views:
@@ -106,6 +108,19 @@ views:
             old_daily_format: false
             time_format: 24
             show_beaufort: true
+
+#################################################################
+#                                                               #
+#                    Home - Air Quality Card                    #
+#                                                               #
+#################################################################
+          - type: "custom:air-visual-card"
+            # icons: /local/icons/aqi_icons
+            air_pollution_level: sensor.u_s_air_pollution_level_3
+            air_quality_index: sensor.u_s_air_quality_index_3
+            main_pollutant: sensor.u_s_main_pollutant_3
+            temp: weather.dark_sky
+            city: 'Vinh Yen'
 
 #############################################################################################################################################
 #                                                                                                                                           # 
