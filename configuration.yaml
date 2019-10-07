@@ -72,8 +72,6 @@ sun:
 
 person:
 
-system_health:
-
 discovery:
   ignore:
     - yeelight

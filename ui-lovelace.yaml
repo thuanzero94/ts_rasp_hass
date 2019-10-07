@@ -1,0 +1,198 @@
+title: TSRoom
+
+resources:
+  - url: /local/custom_ui/bar-card.js?v=1.0.0
+    type: js
+  - url: /local/custom_ui/mini-graph-card-bundle.js
+    type: module
+  - url: /local/custom_ui/vertical-stack-in-card.js?v=0.1.2
+    type: js
+
+background: center / cover no-repeat url("/local/lovelace/background_19.png") fixed
+views:
+
+#############################################################################################################################################
+#                                                                                                                                           # 
+#                                                               DEMO VIEW                                                              #
+#                                                                                                                                           #
+#############################################################################################################################################
+  - badges:
+      - person.thuanzero94
+      - sun.sun
+      # - sensor.moon
+    cards:
+      - entity: weather.tuson
+        type: weather-forecast
+    path: default_view
+    title: lovelace_test
+
+#############################################################################################################################################
+#                                                                                                                                           # 
+#                                                          VIEW 1 - SYSTEM STATUS                                                          #
+#                                                                                                                                           #
+#############################################################################################################################################
+
+  - id: 1  
+    icon: mdi:settings
+    name: System Status
+    cards:
+
+#################################################################
+#                                                               #
+#                  System Status - Internet Card                #
+#                                                               #
+#################################################################
+
+      - type: vertical-stack
+        cards:
+          - type: horizontal-stack
+            cards:
+              - type: custom:bar-card
+                title_position: inside
+                show_icon: true
+                align: split
+                padding: 4px
+                card_style: 
+                  border-radius: 5px
+                columns: 1
+                max: 100
+                entities:
+                  - entity: sensor.speedtest_ping
+                    severity:
+                    - value: 20
+                      color: '#1db954'
+                    - value: 30
+                      color: '#bf9540'
+                    - value: 50
+                      color: '#bf4040'       
+          - type: horizontal-stack
+            cards:
+              - type: custom:mini-graph-card
+                entities: 
+                  - sensor.speedtest_download
+                height: 50
+                line_width: 2
+                font_size: 70
+                hours_to_show: 168
+                points_per_hour: 1
+                show:
+                  extrema: true
+                  fill: true
+                color_thresholds:
+                  - value: 0
+                    color: "#FFFF00"
+                  - value: 40
+                    color: "#3498db"
+                    
+              - type: custom:mini-graph-card
+                entities: 
+                  - sensor.speedtest_upload
+                height: 50
+                line_width: 2
+                font_size: 70
+                hours_to_show: 168
+                points_per_hour: 1
+                show:
+                  extrema: true
+                  fill: true
+                color_thresholds:
+                  - value: 0
+                    color: "#FFFF00"
+                  - value: 13
+                    color: "#3498db"
+
+#################################################################
+#                                                               #
+#               System Status - NUC Resources Card              #
+#                                                               #
+#################################################################
+
+      - type: vertical-stack
+        cards:    
+          - type: entities
+            show_header_toggle: off
+            entities:
+              - type: section
+                label: HASSIO SERVER ---- Raspberry pi 3B+ ---- Raspbian OS---- HA 0.99.2
+              - type: custom:vertical-stack-in-card
+                cards:
+                  - type: horizontal-stack
+                    cards:
+                      # - type: vertical-stack
+                      #   cards:
+                      #     - type: custom:card-modder
+                      #       card: 
+                      #         type: picture
+                      #         image: /local/lovelace/settings/rpi.png
+                      #       style:                 
+                      #         border-radius: 5px
+                     
+                      # - type: custom:bar-card
+                      #   title_position: inside
+                      #   entity: sensor.ha_restart_time
+                      #   title: Restart Time
+                      #   align: center
+                      #   padding: 5px
+                      #   max: 60
+                      #   card_style: 
+                      #     border-radius: 5px
+                      - type: custom:bar-card
+                        title_position: inside
+                        entity: sensor.time_online
+                        title: Up Time this Week
+                        align: center
+                        padding: 5px
+                        max: 168
+                        card_style: 
+                          border-radius: 5px
+                      - type:  custom:bar-card
+                        title_position: inside
+                        entity: sensor.last_boot
+                        title: Last boot time
+                        align: center
+                        padding: 5px
+                        max: 168
+                        card_style:
+                          border-radius: 5px
+           
+              - type: custom:bar-card
+                align: split
+                show_icon: true
+                padding: 4px
+                columns: 2
+                card_style: 
+                  border-radius: 5px
+                entities:
+                  - entity: sensor.disk_use_percent
+                    title: Disk
+                  - entity: sensor.memory_use_percent
+                    title: RAM
+
+              - type: custom:bar-card
+                align: split
+                show_icon: true
+                padding: 4px
+                columns: 2
+                card_style: 
+                  border-radius: 5px
+                entities:
+                  - entity: sensor.processor_use
+                    title: CPU
+                  - entity: sensor.cpu_temperature
+                    title: Temp  
+                    icon: mdi:thermometer
+
+              - type: custom:bar-card
+                align: split
+                show_icon: true
+                padding: 4px
+                columns: 2
+                card_style: 
+                  border-radius: 5px
+                entities:
+                  - entity: sensor.network_throughput_in_eth0
+                    title: Net In
+                    icon: mdi:download-network-outline
+                  - entity: sensor.network_throughput_out_eth0
+                    title: Net Out  
+                    icon: mdi:upload-network-outline
