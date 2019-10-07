@@ -11,6 +11,27 @@ resources:
     type: module
   - url: /local/custom_ui/air-visual-card.js
     type: js
+  - url: /local/custom_ui/compact-custom-header.js?v=1.4.1
+    type: module
+
+#############################################################################################################################################
+#                                                                                                                                           # 
+#                                                               Compact Header Config                                                                 #
+#                                                                                                                                           #
+############################################################################################################################################# 
+cch:
+  # hide_tabs: '4,5,6,7,8'
+  main_config: true
+  background: 'rgba(150, 150, 150, 0.2)'
+  menu: show
+  options: clock
+  voice: show
+  notifications: show
+  clock_format: 24
+  clock_date: true
+  date_locale: vi
+  disable: false
+  swipe: true
 
 background: center / cover no-repeat url("/local/lovelace/background_19.png") fixed
 views:
