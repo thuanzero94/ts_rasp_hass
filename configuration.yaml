@@ -1,15 +1,134 @@
 
 # Configure a default setup of Home Assistant (frontend, api, etc)
-default_config:
+# default_config:
 
-# Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+#################################################################
+#                                                               #
+#           Home Assistant Main Configuration File              #
+#                                                               #
+#################################################################
+homeassistant:
+  name: !secret name
+  temperature_unit: C
+  elevation: 69
+  time_zone: !secret timezone
+  latitude: !secret latitude
+  longitude: !secret longitude
+  unit_system: metric
+  customize: !include includes/customize.yaml
+  packages: !include_dir_named packages
+  # whitelist_external_dirs:
+  #   - /config
+  # auth_providers:
+  #   - type: homeassistant
+  #   - type: trusted_networks
+  #     trusted_networks:
+  #       - 192.168.100.0/24
+  #       - 127.0.0.1
+  #     trusted_users:
+  #       192.168.100.8: "thuanzero94"
+
+
+#################################################################
+#                                                               #
+#                        Customizations                         #
+#                                                               #
+#################################################################
+frontend:
+  themes: !include_dir_merge_named themes
+  javascript_version: latest
+  extra_html_url:
+    - /local/custom_ui/fontawesome/hass-fontawesome-solid.html
+    - /local/custom_ui/fontawesome/hass-fontawesome-regular.html
+    - /local/custom_ui/fontawesome/hass-fontawesome-brands.html
+  #   - /local/custom_ui/state-card-floorplan.html
+
+lovelace:
+  mode: yaml
+
+#################################################################
+#                                                               #
+#                           Enables                             #
+#                                                               #
+#################################################################
+config:
+
 # http:
-#   base_url: example.duckdns.org:8123
+#   api_password: !secret http_password
 
-# Text to speech
-tts:
-  - platform: google_translate
+cloud:
 
-group: !include groups.yaml
-automation: !include automations.yaml
-script: !include scripts.yaml
+updater:
+    
+conversation:
+
+history:
+
+logbook:
+
+map:
+
+sun:
+
+person:
+
+system_health:
+
+discovery:
+  ignore:
+    - yeelight
+
+
+####################################################
+#                                                  #
+#                    Includes                      #
+#                                                  #
+####################################################
+group: !include includes/groups.yaml
+automation: !include includes/automations.yaml
+script: !include includes/scripts.yaml
+
+
+####################################################
+#                                                  #
+#                      Logger                      #
+#                                                  #
+####################################################
+logger:
+  default: error
+
+
+####################################################
+#                                                  #
+#                      MQTT                        #
+#                                                  #
+####################################################
+mqtt:
+  broker: !secret mqtt_broker
+  port:   !secret mqtt_port
+  username: !secret mqtt_user
+  password: !secret mqtt_pass  
+
+
+#################################################################
+#                                                               #
+#                            Panel                              #
+#                                                               #
+#################################################################
+# panel_custom:
+#   - name: floorplan
+#     sidebar_title: Floorplan
+#     sidebar_icon: mdi:home
+#     url_path: floorplan
+#     config: !include includes/floorplan.yaml
+
+
+####################################################
+#                                                  #
+#                     Recorder                     #
+#                                                  #
+####################################################
+recorder:
+  purge_interval: 1
+  purge_keep_days: 14
+
